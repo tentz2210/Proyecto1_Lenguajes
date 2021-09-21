@@ -1,9 +1,16 @@
 #include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+
+#define K 30
+#define DAYS_ARR_SIZE 365
 
 double calcProbabilidadTeorica(int s);
 double calcProbabilidadEmpirica(int s, int k);
 double calcErrorRelativo(double t, double p);
-int realizarExperimento(int s);
+bool realizarExperimento(int s);
 int factorial(int n);
 
 
@@ -13,8 +20,21 @@ double calcProbabilidadTeorica(int s){
 }
 
 double calcProbabilidadEmpirica(int s, int k){
-    return 0.0;
-    // to do
+    int i, n;
+    double p;
+
+    i = n = 0;
+
+    while(i < k){
+      if(realizarExperimento(s)){
+        n++;
+      }
+      i++;
+    }
+
+    p = (double)n / k;
+    
+    return p;
 }
 
 double calcErrorRelativo(double t, double p){
@@ -22,9 +42,32 @@ double calcErrorRelativo(double t, double p){
     // to do
 }
 
-int realizarExperimento(int s){
-    return 0;
-    // to do
+bool realizarExperimento(int s){
+  bool daysArr[DAYS_ARR_SIZE];
+  for(int idx = 0; idx < DAYS_ARR_SIZE; idx++){
+    daysArr[idx] = false;
+  }
+
+  bool result = true;
+  int i = 0;
+  int selected;
+  double r;
+  srand(0);
+
+  while(i < s){
+    r = (double)rand() / RAND_MAX;
+    selected = round(r * DAYS_ARR_SIZE);
+    if(daysArr[selected]){
+      result = false;
+      break;
+      
+    } else {
+      daysArr[selected] = true;
+    }
+    i++;
+  }
+
+  return result;
 }
 
 int factorial(int n){
