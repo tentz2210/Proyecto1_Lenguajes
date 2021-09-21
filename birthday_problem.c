@@ -38,8 +38,8 @@ double calcProbabilidadEmpirica(int s, int k){
 }
 
 double calcErrorRelativo(double t, double p){
-    return 0.0;
-    // to do
+    double d = fabs(t-p) / t;
+    return d;
 }
 
 bool realizarExperimento(int s){
@@ -78,6 +78,8 @@ int factorial(int n){
     }
 
 }
+
+
 
 
 int main() {
