@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <math.h>
 
-#define K 30
+#define K 10000
 #define DAYS_ARR_SIZE 365
 
 double calcProbabilidadTeorica(int s);
@@ -61,7 +61,7 @@ bool realizarExperimento(int s){
 
   while(i < s){
     r = ((double)rand()) / (double)RAND_MAX;
-    selected = round(floor(r * DAYS_ARR_SIZE));
+    selected = (double)floor(r * DAYS_ARR_SIZE);
     if(daysArr[selected]){
       result = false;
       break;
@@ -77,28 +77,21 @@ bool realizarExperimento(int s){
 
 int main() {
     int s; // cantidad de personas en el experimento
-    int k; // cantidad de veces que se corre el experimento
     double t; // probabilidad teorica
     double p; // probabilidad empirica
     double d; // error relativo
 
     printf("Digite la cantidad de personas en el experimento: ");
     scanf("%d", &s);
-
-    printf("Digite la cantidad de veces que desea que se repita el experimento: ");
-    scanf("%d", &k);
-
-    
+ 
     t = calcProbabilidadTeorica(s);
-
-    p = calcProbabilidadEmpirica(s, k);
+    p = calcProbabilidadEmpirica(s, K);
     d = calcErrorRelativo(t, p);
     
-
     printf("Probabilidad teorica: %f \n", t);
     printf("Probabilidad empirica:  %f \n", p);
     printf("Error relativo:  %f \n", d);
-    printf("Repeticiones del experimento: %d \n", k);
+    printf("Repeticiones del experimento: %d \n", K);
 
     return 0;
 }
