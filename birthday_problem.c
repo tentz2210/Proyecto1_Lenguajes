@@ -61,7 +61,7 @@ bool realizarExperimento(int s){
 
   while(i < s){
     r = ((double)rand()) / (double)RAND_MAX;
-    selected = round(r * DAYS_ARR_SIZE);
+    selected = round(floor(r * DAYS_ARR_SIZE));
     if(daysArr[selected]){
       result = false;
       break;
