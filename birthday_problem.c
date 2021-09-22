@@ -15,8 +15,9 @@ int factorial(int n);
 
 
 double calcProbabilidadTeorica(int s){
-    return 0.0;
-    // to do
+    double p;
+    p = (factorial(365)/pow(365,s))*factorial(365-s)
+    return p;
 }
 
 double calcProbabilidadEmpirica(int s, int k){
