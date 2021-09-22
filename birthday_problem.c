@@ -11,13 +11,17 @@ double calcProbabilidadTeorica(int s);
 double calcProbabilidadEmpirica(int s, int k);
 double calcErrorRelativo(double t, double p);
 bool realizarExperimento(int s);
-int factorial(int n);
-
 
 double calcProbabilidadTeorica(int s){
-    double p;
-    p = (factorial(365)/pow(365,s))*factorial(365-s)
-    return p;
+    if(s >=1 && s <= 365){ 
+        double p = 1;
+        int days = DAYS_ARR_SIZE;
+        for(int i = 1; i<s;i++){
+            p *= ((double)(--days))/DAYS_ARR_SIZE;
+        }
+        return p;
+    }
+    return 0;
 }
 
 double calcProbabilidadEmpirica(int s, int k){
@@ -25,15 +29,16 @@ double calcProbabilidadEmpirica(int s, int k){
     double p;
 
     i = n = 0;
+    srand(time(NULL));
 
     while(i < k){
       if(realizarExperimento(s)){
-        n++;
+          n++;
       }
       i++;
     }
 
-    p = (double)n / k;
+    p = ((double)n) / k;
     
     return p;
 }
@@ -53,10 +58,9 @@ bool realizarExperimento(int s){
   int i = 0;
   int selected;
   double r;
-  srand(0);
 
   while(i < s){
-    r = (double)rand() / RAND_MAX;
+    r = ((double)rand()) / (double)RAND_MAX;
     selected = round(r * DAYS_ARR_SIZE);
     if(daysArr[selected]){
       result = false;
@@ -70,18 +74,6 @@ bool realizarExperimento(int s){
 
   return result;
 }
-
-int factorial(int n){
-    if(n == 0) {
-        return 1;
-    } else {
-        return n * factorial(n-1);
-    }
-
-}
-
-
-
 
 int main() {
     int s; // cantidad de personas en el experimento
@@ -98,6 +90,7 @@ int main() {
 
     
     t = calcProbabilidadTeorica(s);
+
     p = calcProbabilidadEmpirica(s, k);
     d = calcErrorRelativo(t, p);
     
